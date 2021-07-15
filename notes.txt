@@ -1,0 +1,107 @@
+
+//Sequelize is a promise based object Relational mapper
+  /* Able to define a js object   model to transforms into a SQL table with columns and rows
+
+SQL Database are relational databases that store data in tables.
+
+DATATYPE defines what type of value the column can hold.
+
+Each row is given a unique indtifer known as a primary key.
+
+
+*SQL tables can be assoicated
+when tables are assoicated to do that operation you must JOIN
+
+You can join tables by referencing primary key.
+
+A promise in JS repersents the eventual completion or failure of a async operation and its resulting value.
+
+Sequelize uses bluebird library
+
+.then = function that is chained on after request is made and if the request is sucessful it will contain an object with the resulting data set.
+
+.catch = function that is chained on after the .then function and contains an error object in the event an error has occured 
+
+
+
+      ------EXAMPLE----
+--code of .then and .catch--
+
+*/
+User.findbyID(1)       //find user by using a request method .findbyID
+    .then((user) => { //.then chained on to the request and contains in its arguement the response data on success
+        res.json(user);
+          })
+  .catch((err) => {  //will be called if there is an error and will contain a response object that can be accessed from its arguement
+    console.log(err);
+  })
+
+
+  //Benefits of sequelize 
+
+  /* 
+  Simplifies code
+  
+  all JS so no need for queries
+  
+  Robust API that can be used to build models, query or mutate data
+
+  build in security to prevent SQL injection attacks.
+
+              MODELS 
+
+Sequelize maps JS objects into SQL tables..to do this we must define models.
+
+Models are then mapped or transforms into tables/columns inside a sql database. 
+
+
+          ----EXAMPLE----
+            ---MODELS---
+  
+   User = {                 //Model named User        
+        
+        
+        name: Sequelize.STRING,   //Adding key values pairs aka attributes 
+        bio: Sequelize.STRING     //key name will map to sql column and value will be type of data thats allowed insde column
+    };
+  //Model name of User will be mapped to SQL table and will automatically be pluralized into a  USERS table and will contain 2 columns called "name" and "bio". DATA stored will match the datatype definded. 
+
+  When creating a new model we will need to define a variable that will hold a model reference. 
+
+            ----MODEL CREATION EXAMPLE-----
+
+  const User = 
+  connection.define('User, {  //set equal to sequelize connection reference | define method creates model instances and creates 2 arguments; name of model (STRING and should match variable reference name), object will contain all attributes
+      name: Sequelize.STRING,
+      bio: Sequelize.TEXT
+  }')
+
+In order for models to be turned into tables in SQL database we need the sync method.
+
+best to invoke sync on sequelize connection, when invoking the sync we can pass an optional object. sync with logging can see raw SQL code 
+ 
+          ---EXAMPLE SYNC------
+
+        
+  const User = 
+  connection.define('User, {  
+      name: Sequelize.STRING,   // invoking on model
+      bio: Sequelize.TEXT
+  }').sync
+
+  ^^ or   vv
+
+  connection.sync();            //invoking on connection
+
+
+
+      ----Adding DATA-----
+
+  In order to add use .create method. You need to chain the method  onto model and then pass in attriubtes defined on model along with data we want to add
+
+
+  Primary keys 
+    is unieque indtifer
+    forms assoications
+    auto generated 
+    
